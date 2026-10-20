@@ -1,26 +1,5 @@
 [
   {
-    "id": "prod_1792509810382",
-    "name": "الفهد",
-    "category": "oud",
-    "categoryName": "دهون عطر ملكي",
-    "priceSAR": 102,
-    "oldPriceSAR": 121,
-    "priceYER": 41300,
-    "oldPriceYER": 50000,
-    "discount": "-17%",
-    "ml": 100,
-    "image": "assets/images/uploads/prod_1792509810382_main.jpg",
-    "images": [
-      "assets/images/uploads/prod_1792509810382_0.jpg"
-    ],
-    "stock": 1,
-    "rating": 5,
-    "reviewsCount": 1,
-    "subtitle": "زجاجة فاخرة • 100 مل ماء عطر مركز",
-    "desc": "ثبات رهيب"
-  },
-  {
     "id": "prod_1792485175217",
     "name": "ستار لايت",
     "category": "men",
@@ -58,6 +37,7 @@
       "assets/images/bottles_3d/amber_royal.png",
       "assets/images/bottles_3d/oud_tola.png"
     ],
+    "stock": 15,
     "rating": 4.9,
     "reviewsCount": 142,
     "subtitle": "تولة ملكية زجاجية فاخرة • 12 مل (ربع تولة معتقة)",
@@ -79,6 +59,7 @@
       "assets/images/bottles_3d/silk_musk.png",
       "assets/images/bottles_3d/french_rose.png"
     ],
+    "stock": 20,
     "rating": 5,
     "reviewsCount": 98,
     "subtitle": "تولة مخملية نقية • 12 مل من المسك الأبيض البكر",
@@ -100,6 +81,7 @@
       "assets/images/bottles_3d/hero_perfume.png",
       "assets/images/bottles_3d/royal_oud.png"
     ],
+    "stock": 18,
     "rating": 4.8,
     "reviewsCount": 112,
     "subtitle": "زجاجة كريستال فاخرة • 100 مل ماء عطر مركز (Parfum)",
@@ -121,9 +103,54 @@
       "assets/images/bottles_3d/amber_royal.png",
       "assets/images/bottles_3d/royal_oud.png"
     ],
+    "stock": 12,
     "rating": 4.9,
     "reviewsCount": 86,
     "subtitle": "تولة فاخرة محكمة الإغلاق • 12 مل عنبر أصيل",
     "desc": "دفء العنبر الرمادي الممزوج بأفخر أنواع الراتنجات العطرية والمسك الحار، ثبات أسطوري ينبض بالفخامة والهيبة."
+  },
+  {
+    "id": "oud_tola",
+    "name": "تولة العود والمسك الملكي",
+    "category": "oud",
+    "categoryName": "دهون عطر ملكي",
+    "priceSAR": 210,
+    "oldPriceSAR": 280,
+    "priceYER": 86730,
+    "oldPriceYER": 115640,
+    "discount": "-25%",
+    "ml": 100,
+    "image": "assets/images/bottles_3d/oud_tola.png",
+    "images": [
+      "assets/images/bottles_3d/oud_tola.png",
+      "assets/images/bottles_3d/silk_musk.png"
+    ],
+    "stock": 16,
+    "rating": 4.7,
+    "reviewsCount": 64,
+    "subtitle": "تولة كلاسيكية عتيقة • 12 مل مزيج ملكي",
+    "desc": "توليفة بديعة تجمع نقاء المسك الأبيض مع دفء العود المعتق، خيار مثالي للاستخدام اليومي والمناسبات الخاصة."
+  },
+  {
+    "id": "french_rose",
+    "name": "الورد الفرنسي النسائي",
+    "category": "women",
+    "categoryName": "عطور نسائية",
+    "priceSAR": 250,
+    "oldPriceSAR": 330,
+    "priceYER": 103250,
+    "oldPriceYER": 136290,
+    "discount": "-24%",
+    "ml": 100,
+    "image": "assets/images/bottles_3d/french_rose.png",
+    "images": [
+      "assets/images/bottles_3d/french_rose.png",
+      "assets/images/bottles_3d/silk_musk.png"
+    ],
+    "stock": 14,
+    "rating": 4.9,
+    "reviewsCount": 78,
+    "subtitle": "زجاجة فرنسية مذهبة • 100 مل أو دو بارفان",
+    "desc": "نفحات باريسية راقية تستحضر عبير ورود غراس في الصباح الباكر ممتزجة مع الفانيليا والأخشاب البيضاء الناعمة."
   }
 ]
