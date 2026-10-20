@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>حكاية | HIKAYA Haute Parfumerie • لكل عبق حكاية تروى</title>
+  <meta name="description" content="دار حكاية للعطور الملكية الفاخرة ودهن العود المعتق والمسك الصافي. تجربة عطرية لا تُنسى في عدن واليمن.">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+
+  <!-- Google Fonts: Almarai & Cairo (Saudi Luxury App Style) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&family=Cairo:wght@600;700;800;900&family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'hk-noir': '#050505',
+            'hk-soft': '#0D0D0D',
+            'hk-card': '#121212',
+            'hk-gold': '#D4AF37',
+            'hk-gold-warm': '#E5C158',
+            'hk-gold-shimmer': '#F7E7A9',
+            'hk-gold-deep': '#997828',
+            'hk-champagne': '#FFFFFF',
+            burgundy: '#0D0D0D',
+            gold: '#D4AF37',
+            'gold-light': '#F7E7A9',
+            black: '#050505',
+            ivory: '#FFFFFF'
+          },
+          fontFamily: {
+            heading: ['Almarai', 'Cairo', 'sans-serif'],
+            latin: ['Cormorant Garamond', 'serif'],
+            body: ['Almarai', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- HIKAYA Design System Stylesheets -->
+  <link rel="stylesheet" href="assets/css/hekaya-brand.css">
+  <link rel="stylesheet" href="assets/css/luxury-theme.css">
+</head>
+<body class="bg-[#0A0A0A] text-ivory pb-24 selection:bg-gold/30">
+
+  <!-- Subtle Floating Gold Particles Canvas -->
+  <canvas id="goldParticlesCanvas"></canvas>
+
+  <!-- =========================================================================
+       FIXED LUXURY HEADER (Brand Logo, Currency Switcher & Cart)
+       ========================================================================= -->
+  <header class="sticky top-0 z-40 bg-gradient-to-b from-[#14120C] via-[#1E1911] to-[#282116] border-b border-gold/30 px-4 pt-2.5 pb-3 shadow-xl">
+    <div class="max-w-6xl mx-auto flex items-center justify-between">
+      
+      <!-- Right: Modern Location Badge & App Switcher -->
+      <div class="flex items-center gap-1.5 sm:gap-2 justify-start">
+        <a href="mobile-app.html" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-gold/50 bg-[#1A1A1A] hover:bg-gold/20 text-gold text-xs font-bold transition-all shadow-sm" title="واجهة تطبيق الجوال">
+          <span>📱 التطبيق</span>
+        </a>
+        <div class="hidden sm:flex items-center gap-1 bg-white/10 backdrop-blur-md px-2.5 py-1 rounded-full border border-gold/30 text-[11px] font-bold text-gold-light">
+          <span>📍 عدن • كريتر</span>
+        </div>
+        <button onclick="filterShopCategory('all'); document.getElementById('shopSection').scrollIntoView({behavior:'smooth'});" class="btn-icon-luxury relative" title="المفضلة">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+          </svg>
+          <span class="wishlist-badge-count absolute -top-1 -right-1 w-4 h-4 rounded-full bg-gold text-black text-[9px] font-black flex items-center justify-center shadow-gold-soft">0</span>
+        </button>
+      </div>
+
+      <!-- Center: HIKAYA Master Logo -->
+      <div class="text-center cursor-pointer flex flex-col items-center justify-center py-0.5 group" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+        <div class="relative flex items-center justify-center">
+          <div class="absolute -inset-2 bg-gradient-to-r from-gold/0 via-gold/30 to-gold/0 rounded-full blur-md opacity-70 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
+          <img 
+            src="assets/images/hikaya_logo_gold.png" 
+            alt="دار حكاية للعطور • HIKAYA Haute Parfumerie" 
+            class="relative h-9 sm:h-12 w-auto max-w-[150px] sm:max-w-[210px] object-contain transition-transform duration-300 group-hover:scale-105 filter drop-shadow-[0_2px_12px_rgba(212,184,150,0.50)]" 
+          />
+        </div>
+      </div>
+
+      <!-- Left: Currency Toggle & Wide Luxury "سلتك" Cart Button -->
+      <div class="flex items-center gap-1.5 sm:gap-2.5 justify-end">
+        <div class="flex items-center rounded-full border border-gold/40 p-0.5 bg-black/80 text-[11px] font-bold shadow-inner">
+          <button onclick="toggleCurrency()" class="currency-toggle-btn px-2 sm:px-2.5 py-0.5 rounded-full font-bold text-gold hover:text-white transition-all flex items-center gap-1" title="تبديل العملة الرسمية (سعودي / يمني)">
+            <span id="headerCurrencyText" class="flex items-center gap-1">
+              <img src="assets/images/sar_symbol_gold.png" alt="ر.س" class="w-3.5 h-3.5 object-contain filter drop-shadow" />
+              <span class="font-extrabold text-gold">ر.س</span>
+            </span>
+            <span class="text-white/40 text-[10px] font-normal">/ ر.ي</span>
+          </button>
+        </div>
+
+        <!-- Wide Ultra-Luxurious "سلتك" Button -->
+        <button onclick="openCartDrawer()" class="btn-cart-wide flex items-center gap-2 px-3 sm:px-4 py-1.5 rounded-full border border-gold/75 bg-gradient-to-r from-[#171717] via-[#241F16] to-[#171717] hover:border-gold hover:shadow-[0_0_18px_rgba(212,175,55,0.45)] transition-all cursor-pointer group shadow-lg active:scale-95" title="حقيبة التسوق - سلتك">
+          <div class="relative flex items-center justify-center text-gold group-hover:scale-110 transition-transform">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <path d="M16 10a4 4 0 0 1-8 0"></path>
+            </svg>
+          </div>
+          <span class="text-xs font-heading font-black text-white group-hover:text-gold transition-colors tracking-wide">سلتك</span>
+          <span class="cart-badge-count min-w-[20px] h-5 px-1.5 rounded-full bg-gradient-to-r from-gold to-[#F7E7A9] text-black text-[11px] font-black flex items-center justify-center font-mono shadow-sm">0</span>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Rounded Search Bar (خلفية بيضاء وحواف دائرية بالكامل كما في التصميم المعتمد) -->
+    <div class="max-w-6xl mx-auto pt-2.5">
+      <div class="flex items-center bg-white rounded-full px-4 py-2 shadow-lg border border-gold/30">
+        <svg class="w-4 h-4 text-gray-400 ml-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <input 
+          id="shopSearchInput"
+          type="text" 
+          placeholder="ابحث عن عطر ملكي، دهن عود، مسك الحرير..." 
+          class="w-full text-xs text-gray-800 placeholder-gray-400 bg-transparent outline-none font-sans"
+          oninput="renderShopProducts()"
+        />
+        <button class="w-6 h-6 rounded-full bg-[#FAF7F2] flex items-center justify-center text-hk-gold-deep text-xs font-bold" title="بحث صوتي">
+          🎙️
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- =========================================================================
+       FREE DELIVERY PROMO RIBBON (شريط التوصيل الذهبي المطابق للرندر)
+       ========================================================================= -->
+  <div class="max-w-6xl mx-auto px-4 pt-2.5 pb-1">
+    <div class="flex items-center justify-between px-4 py-2 rounded-xl bg-gradient-to-r from-[#D4AF37] via-[#F3E5AB] to-[#B8945F] text-black shadow-md text-xs font-black">
+      <div class="flex items-center gap-2">
+        <span class="text-base">🚚</span>
+        <span>Free Delivery • توصيل فوري ومجاني لكافة طلبات اليوم في عدن وكافة المحافظات</span>
+      </div>
+      <span class="text-[10px] bg-black text-gold-light px-2.5 py-0.5 rounded-full font-mono">مجاناً</span>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       HERO BANNER (بانر إعلاني كبير مطابق لشاشة 1)
+       ========================================================================= -->
+  <section class="max-w-6xl mx-auto px-4 pt-2 pb-2">
+    <div class="relative rounded-2xl overflow-hidden border border-gold/40 p-4 sm:p-7 bg-gradient-to-l from-[#17140E] via-[#2A2216] to-[#120F0A] shadow-2xl">
+      <!-- Golden Ambient Aura Back-Glow -->
+      <div class="absolute -right-8 -bottom-8 w-60 h-60 rounded-full bg-gold/20 blur-3xl pointer-events-none"></div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-12 gap-4 items-center relative z-10">
+        
+        <!-- Text Column -->
+        <div class="sm:col-span-7 text-right space-y-2.5">
+          <span class="inline-block px-3 py-1 rounded-full bg-gold/20 border border-gold/40 text-[10px] font-bold text-gold-light">
+            إصدار حصري فاخر ✨
+          </span>
+          <h2 class="text-2xl sm:text-4xl font-heading font-black text-white leading-tight">
+            دهون عود معتقة
+          </h2>
+          <p class="text-xs sm:text-sm text-gray-300 leading-relaxed max-w-md">
+            تولة ملكية نادرة تروي أسرار الفخامة والأصالة، مستخلصة من أندر خشب العود الطبيعي المعتق بنفحات آسرة.
+          </p>
+
+          <div class="flex items-center gap-2.5 pt-1">
+            <a href="#shopSection" class="btn-luxury-primary text-xs py-2.5 px-6">
+              <span>اكتشف الحكاية</span>
+              <span class="text-sm font-bold">←</span>
+            </a>
+            <a href="mobile-app.html" class="btn-luxury-secondary text-xs py-2.5 px-5 border border-gold/40 text-gold-light">
+              <span>عرض التطبيق 📱</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Floating 3D Perfume Bottle Presentation -->
+        <div class="sm:col-span-5 relative flex items-center justify-center py-2">
+          <div class="relative flex items-center justify-center">
+            <div class="absolute w-44 sm:w-56 h-44 sm:h-56 rounded-full bg-gold/25 blur-2xl pointer-events-none"></div>
+            <img 
+              src="assets/images/bottles_3d/royal_oud.png" 
+              alt="دهن عود ملكي معتق" 
+              class="relative z-10 h-44 sm:h-56 w-auto object-contain filter drop-shadow-[0_16px_28px_rgba(0,0,0,0.85)] hover:scale-105 transition-transform duration-500" 
+            />
+            <div class="absolute -bottom-2 w-32 sm:w-44 h-4 bg-black/80 rounded-[100%] blur-[4px]"></div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Banner Pagination Dots -->
+      <div class="flex items-center justify-center gap-1.5 mt-3 pt-1">
+        <span class="w-5 h-1.5 rounded-full bg-gold"></span>
+        <span class="w-1.5 h-1.5 rounded-full bg-white/40"></span>
+        <span class="w-1.5 h-1.5 rounded-full bg-white/40"></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       MAIN STORE SECTION (6 Authentic Perfumes, 3D Cutout Floating Cards)
+       ========================================================================= -->
+  <section id="shopSection" class="max-w-6xl mx-auto px-4 py-4 space-y-4">
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-gold/20 pb-3">
+      <div>
+        <h3 class="text-base sm:text-xl font-heading font-extrabold text-white">💎 مقتنيات حكاية المختارة</h3>
+        <p class="text-xs text-gray-400">تصفح نخبة العطور الفاخرة ودهن العود الطبيعي المعتق</p>
+      </div>
+
+      <!-- Category Filter Pills (Horizontal Scroll on Mobile - White Pill Buttons) -->
+      <div class="flex items-center gap-2 overflow-x-auto pb-1 text-xs no-scrollbar">
+        <button onclick="filterShopCategory('all', this)" class="category-chip-pill active">
+          لك ✨
+        </button>
+        <button onclick="filterShopCategory('oud', this)" class="category-chip-pill">
+          دهن عود 👑
+        </button>
+        <button onclick="filterShopCategory('musk', this)" class="category-chip-pill">
+          مسك صافي 🌸
+        </button>
+        <button onclick="filterShopCategory('men', this)" class="category-chip-pill">
+          عطور فرنسية ⚜️
+        </button>
+        <button onclick="filterShopCategory('women', this)" class="category-chip-pill">
+          عنبر ملكي 🪵
+        </button>
+      </div>
+    </div>
+
+    <!-- 6 Products Grid (2 cols mobile, 3 cols desktop, compact and flexible) -->
+    <div id="shopProductsGrid" class="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-5">
+      <!-- Populated dynamically via app.js -->
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       LUXURY FOOTER
+       ========================================================================= -->
+  <footer class="max-w-6xl mx-auto px-4 pt-10 pb-6 mt-10 border-t border-gold/30 text-xs text-gray-400 space-y-6">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-right">
+      
+      <!-- Brand Story -->
+      <div class="space-y-2">
+        <div class="flex items-center gap-2">
+          <img src="assets/images/hikaya_logo_gold.png" alt="دار حكاية للعطور" class="h-9 w-auto object-contain filter drop-shadow-[0_2px_8px_rgba(212,184,150,0.3)]" />
+        </div>
+        <p class="text-xs text-gray-300 leading-relaxed">
+          دار عطور ملكية فاخرة تسرد في كل قطرة حكاية استثنائية من السحر والأصالة. نعتمد أنقى الزيوت العطرية والخامات الطبيعية لثبات يدوم طويلاً.
+        </p>
+        <p class="text-[11px] text-gold font-bold">📍 المقر الرئيسي: عدن • اليمن</p>
+      </div>
+
+      <!-- Quick Links -->
+      <div class="space-y-2">
+        <h5 class="text-sm font-heading font-bold text-ivory">روابط سريعة</h5>
+        <ul class="space-y-1.5 text-xs text-gray-300">
+          <li><a href="#" class="hover:text-gold transition-colors">✦ العطور الأكثر طلباً</a></li>
+          <li><a href="#shopSection" class="hover:text-gold transition-colors">✦ دهن العود المعتق</a></li>
+          <li><a href="#shopSection" class="hover:text-gold transition-colors">✦ مسك الحرير الملكي</a></li>
+          <li><a href="https://wa.me/967777889900" target="_blank" class="hover:text-gold transition-colors">✦ خدمة العملاء والطلبات الخاصة</a></li>
+        </ul>
+      </div>
+
+      <!-- Payment & Security -->
+      <div class="space-y-2">
+        <h5 class="text-sm font-heading font-bold text-ivory">طرق الدفع المعتمدة</h5>
+        <p class="text-[11px] text-gray-300">نوفر سداداً فورياً وموثوقاً عبر كافة الشبكات والبنوك في عدن:</p>
+        <div class="flex flex-wrap gap-1.5 pt-1">
+          <span class="px-2.5 py-1 rounded bg-[#1A1A1A] border border-gold/30 text-gold text-[10px]">🏦 بنك الكريمي</span>
+          <span class="px-2.5 py-1 rounded bg-[#1A1A1A] border border-gold/30 text-gold text-[10px]">🏛️ بنك القطيبي</span>
+          <span class="px-2.5 py-1 rounded bg-[#1A1A1A] border border-gold/30 text-gold text-[10px]">📱 محفظة شلن</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Copyright -->
+    <div class="pt-4 border-t border-gold/15 text-center text-[11px] text-gray-500">
+      <p>© 2026 دار حكاية للعطور (HIKAYA Haute Parfumerie). جميع الحقوق محفوظة.</p>
+    </div>
+  </footer>
+
+  <!-- =========================================================================
+       MOBILE FLOATING DOCK (مطابق تماماً للشريط السفلي في الرندر المعتمد)
+       ========================================================================= -->
+  <nav class="mobile-floating-dock md:hidden">
+    <!-- 1. الرئيسية -->
+    <a href="#" class="dock-btn active">
+      <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+      <span class="mt-0.5">الرئيسية</span>
+    </a>
+
+    <!-- 2. الأقسام -->
+    <a href="#shopSection" class="dock-btn">
+      <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+      <span class="mt-0.5">الأقسام</span>
+    </a>
+
+    <!-- 3. Central Glowing Circular Action Button (الزر المركزي المتوهج) -->
+    <button class="dock-center-action" onclick="document.getElementById('shopSection').scrollIntoView({behavior:'smooth'})" title="مقتنيات حكاية الملكية">
+      <svg class="w-6 h-6 text-black" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 2l2.4 6.9L21 9.5l-5.3 4.6 1.7 7.1-5.4-3.6-5.4 3.6 1.7-7.1L3 9.5l6.6-.6L12 2z"/>
+      </svg>
+    </button>
+
+    <!-- 4. السلة -->
+    <a href="javascript:void(0)" onclick="openCartDrawer()" class="dock-btn relative">
+      <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+      <span class="mt-0.5">السلة</span>
+      <span class="cart-badge-count absolute -top-1 right-2 w-4 h-4 rounded-full bg-hk-gold-deep text-white text-[9px] font-mono font-bold flex items-center justify-center">0</span>
+    </a>
+
+    <!-- 5. تطبيق الجوال -->
+    <a href="mobile-app.html" class="dock-btn text-hk-gold-deep">
+      <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="3" ry="3"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+      <span class="mt-0.5">تطبيقنا</span>
+    </a>
+  </nav>
+
+  <!-- Backdrop Overlay for Cart Drawer -->
+  <div id="cartDrawerBackdrop" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[95] hidden transition-opacity duration-300 opacity-0" onclick="closeCartDrawer()"></div>
+
+  <!-- =========================================================================
+       CART DRAWER (SLIDE-OUT)
+       ========================================================================= -->
+  <div id="cartDrawer" class="cart-drawer">
+    <div class="p-4 border-b border-gold/25 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <span class="text-gold text-lg">🛍️</span>
+        <h3 class="text-base font-heading font-bold text-ivory">حقيبة المقتنيات الملكية</h3>
+      </div>
+      <button onclick="closeCartDrawer()" class="text-gray-400 hover:text-white text-xl p-1">✕</button>
+    </div>
+
+    <!-- Cart Items Scroll Area -->
+    <div class="flex-1 overflow-y-auto p-4 space-y-3">
+      <!-- Empty State -->
+      <div id="cartEmptyState" class="hidden py-12 text-center space-y-3 flex flex-col items-center justify-center">
+        <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-[#1C1414] to-[#2B1417] border border-red-500/30 flex items-center justify-center shadow-[0_4px_20px_rgba(201,24,43,0.2)] mx-auto">
+          <img src="assets/images/cart_speed_red.png" alt="السلة فارغة" class="w-12 h-12 object-contain filter drop-shadow-[0_2px_8px_rgba(201,24,43,0.4)]" />
+        </div>
+        <div>
+          <p class="text-sm font-heading font-black text-ivory">سلتك العطرية فارغة حالياً</p>
+          <p class="text-xs text-gray-400 mt-0.5">اختر ما يناسب ذوقك الرفيع من مقتنيات حكاية الملكية</p>
+        </div>
+        <button onclick="closeCartDrawer()" class="btn-luxury-secondary text-xs py-2 px-5">
+          استكشف عطور حكاية
+        </button>
+      </div>
+
+      <!-- Filled State Items Container -->
+      <div id="cartItemsList" class="space-y-3"></div>
+    </div>
+
+    <!-- Cart Footer & Checkout Trigger -->
+    <div id="cartFilledState" class="hidden p-4 border-t border-gold/25 bg-black/80 space-y-3">
+      <div class="flex items-center justify-between text-xs text-gray-300">
+        <span>المجموع الفرعي:</span>
+        <span id="cartSubtotal" class="font-bold text-ivory font-mono">0 ر.ي</span>
+      </div>
+      <div class="flex items-center justify-between text-xs text-gold">
+        <span>التوصيل (داخل عدن):</span>
+        <span class="font-bold text-emerald-400">مجاناً ⚡</span>
+      </div>
+      <div class="flex items-center justify-between text-sm font-heading font-bold text-ivory pt-2 border-t border-gold/15">
+        <span>الإجمالي النهائي:</span>
+        <span id="cartTotal" class="text-base text-gold font-mono font-bold">0 ر.ي</span>
+      </div>
+
+      <button onclick="openCheckoutModal()" class="btn-luxury-primary w-full py-3 text-xs shadow-gold-soft">
+        <span>إتمام الطلب الملكي 👑</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       CHECKOUT MODAL (5 STEPS WITH RECEIPT & BANK VERIFICATION)
+       ========================================================================= -->
+  <div id="checkoutModal" class="modal-backdrop">
+    <div class="modal-content max-w-lg p-5">
+      <button onclick="closeCheckoutModal()" class="absolute top-4 left-4 text-gray-400 hover:text-white text-xl">✕</button>
+
+      <!-- 1. FORM VIEW -->
+      <div id="checkoutFormView" class="space-y-4 text-right">
+        
+        <div class="border-b border-gold/20 pb-2">
+          <h3 class="text-base font-heading font-black text-ivory flex items-center gap-1.5">
+            <span class="text-gold">👑</span>
+            <span>إتمام طلبك من دار حكاية (HIKAYA)</span>
+          </h3>
+          <p class="text-[11px] text-gray-400">أدخل بياناتك واختر البنك لرفع إشعار السند للتأكيد والشحن الفوري</p>
+        </div>
+
+        <!-- Step 1: Customer Info -->
+        <div class="space-y-2">
+          <div class="text-xs font-bold text-gold font-heading flex items-center gap-1.5">
+            <span class="w-4 h-4 rounded-full bg-[#1A1A1A] border border-gold flex items-center justify-center text-[10px] font-mono font-bold">1</span>
+            <span>بيانات العميل المستلم:</span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+            <div>
+              <label class="block text-gray-300 text-[11px] mb-1">الاسم الكامل *</label>
+              <input id="checkoutCustomerName" type="text" placeholder="مثلاً: محمد أحمد" class="input-luxury text-xs py-2" required />
+            </div>
+            <div>
+              <label class="block text-gray-300 text-[11px] mb-1">رقم الهاتف (للتواصل والشحن) *</label>
+              <input id="checkoutCustomerPhone" type="tel" placeholder="777XXXXXX" class="input-luxury text-xs py-2 font-mono" required />
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-gray-300 text-[11px] mb-1">العنوان / المدينة *</label>
+            <input id="checkoutCustomerCity" type="text" placeholder="مثلاً: عدن - المعلا، الشارع الرئيسي" class="input-luxury text-xs py-2" value="عدن" required />
+          </div>
+        </div>
+
+        <!-- Step 2: Bank Selection Pills -->
+        <div class="space-y-2">
+          <div class="text-xs font-bold text-gold font-heading flex items-center gap-1.5">
+            <span class="w-4 h-4 rounded-full bg-[#1A1A1A] border border-gold flex items-center justify-center text-[10px] font-mono font-bold">2</span>
+            <span>اختر البنك أو المحفظة للتحويل:</span>
+          </div>
+
+          <div class="grid grid-cols-3 gap-2 text-xs">
+            <button type="button" onclick="selectCheckoutBank('kuraimi')" data-bank="kuraimi" class="bank-pill-btn p-2 rounded-xl border border-gold bg-[#1A1A1A] text-gold font-bold flex flex-col items-center gap-0.5 shadow-gold-soft">
+              <span>🏦 الكريمي</span>
+            </button>
+            <button type="button" onclick="selectCheckoutBank('qutaibi')" data-bank="qutaibi" class="bank-pill-btn p-2 rounded-xl border border-gold/30 text-gray-300 font-bold flex flex-col items-center gap-0.5">
+              <span>🏛️ القطيبي</span>
+            </button>
+            <button type="button" onclick="selectCheckoutBank('shilin')" data-bank="shilin" class="bank-pill-btn p-2 rounded-xl border border-gold/30 text-gray-300 font-bold flex flex-col items-center gap-0.5">
+              <span>📱 محفظة شلن</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Step 3: Bank Details Box (Dynamically updated from Admin / Firebase) -->
+        <div class="glass-panel p-3 border-gold/40 text-xs space-y-1.5">
+          <div class="flex items-center justify-between border-b border-gold/15 pb-1">
+            <span id="checkoutBankBadge" class="font-bold text-gold text-[11px]">بنك الكريمي الإسلامي</span>
+            <button type="button" onclick="copyBankAccountNumber()" class="text-[10px] text-gold-light bg-gold/15 px-2 py-0.5 rounded border border-gold/30 hover:text-white">
+              نسخ رقم الحساب 📋
+            </button>
+          </div>
+
+          <div class="text-[11px] space-y-0.5">
+            <div><span class="text-gray-400">اسم المستلم:</span> <span id="checkoutBankHolderName" class="font-bold text-ivory">دار حكاية للعطور</span></div>
+            <div><span class="text-gray-400">رقم الحساب:</span> <span id="checkoutBankAccountNumber" class="font-bold font-mono text-gold text-sm">3004892150</span></div>
+            <div><span class="text-gray-400">هاتف المسؤول:</span> <span id="checkoutBankPhone" class="font-mono text-ivory" dir="ltr">+967 777 889 900</span></div>
+          </div>
+          <p id="checkoutBankNote" class="text-[10px] text-gray-400 italic pt-0.5">-</p>
+        </div>
+
+        <!-- Step 4: Payment Type -->
+        <div class="space-y-2">
+          <div class="grid grid-cols-2 gap-2 text-xs">
+            <label onclick="setPaymentType('direct')" id="payTypeDirectRadio" class="flex items-center gap-1.5 p-2 rounded-lg border border-gold bg-gold/20 cursor-pointer">
+              <input type="radio" name="payType" value="direct" checked class="accent-gold" />
+              <span class="text-ivory text-[11px]">إيداع مباشر</span>
+            </label>
+            <label onclick="setPaymentType('unified')" id="payTypeUnifiedRadio" class="flex items-center gap-1.5 p-2 rounded-lg border border-gold/30 cursor-pointer">
+              <input type="radio" name="payType" value="unified" class="accent-gold" />
+              <span class="text-ivory text-[11px]">حوالة شبكة موحدة</span>
+            </label>
+          </div>
+
+          <div id="transferNumberInputWrapper" class="hidden">
+            <input id="checkoutTransferNumber" type="text" placeholder="أدخل رقم الحوالة هنا..." class="input-luxury text-xs py-1.5 font-mono" />
+          </div>
+        </div>
+
+        <!-- Step 5: Receipt Upload -->
+        <div class="space-y-1.5">
+          <div class="flex items-center justify-between text-xs">
+            <span class="text-gold font-bold text-[11px]">إرفاق صورة السند / إشعار التحويل:</span>
+            <button type="button" onclick="simulateReceiptUpload()" class="text-[10px] text-gold-light bg-gold/10 px-2 py-0.5 rounded border border-gold/25">
+              تجربة سند افتراضي 📎
+            </button>
+          </div>
+
+          <label class="block border border-dashed border-gold/50 hover:border-gold rounded-xl p-3 text-center cursor-pointer bg-black/40">
+            <input type="file" accept="image/*,.pdf" onchange="handleReceiptUpload(this)" class="hidden" />
+            <div id="receiptPlaceholder" class="text-[11px] text-gray-300">
+              <span>📎 انقر لرفع صورة إشعار التحويل البنكي</span>
+            </div>
+            <div id="receiptPreviewBox" class="hidden items-center justify-center gap-2">
+              <img id="receiptPreviewThumb" class="w-8 h-8 object-cover rounded border border-gold" />
+              <span id="receiptFileName" class="text-xs text-gold font-bold">سند_التحويل.jpg</span>
+              <span class="text-[10px] text-emerald-400">✓ جاهز</span>
+            </div>
+          </label>
+        </div>
+
+        <!-- Total & Submit -->
+        <div class="pt-3 border-t border-gold/20 flex items-center justify-between gap-3">
+          <div>
+            <span class="text-[10px] text-gray-400 block">المبلغ الإجمالي:</span>
+            <span id="checkoutOrderTotal" class="text-lg font-heading font-black text-gold">0 ر.ي</span>
+          </div>
+
+          <button type="button" onclick="submitOrderForm(event)" class="btn-luxury-primary text-xs py-2.5 px-6 shadow-gold-soft">
+            <span>تأكيد الطلب الملكي 👑</span>
+          </button>
+        </div>
+
+      </div>
+
+      <!-- 2. SUCCESS SCREEN VIEW -->
+      <div id="checkoutSuccessView" class="hidden py-6 text-center space-y-4">
+        <div class="w-14 h-14 rounded-full border border-gold bg-[#1A1A1A] mx-auto flex items-center justify-center shadow-gold-soft text-xl text-gold">
+          ✓
+        </div>
+        <div>
+          <h3 class="text-lg font-heading font-black text-ivory">تم استلام طلبك الملكي بنجاح!</h3>
+          <p class="text-xs text-gray-300 mt-1">رقم طلبك: <span id="successOrderId" class="text-gold font-mono font-bold">HK-2026</span></p>
+          <p class="text-xs text-gray-300 mt-0.5">الإجمالي: <span id="successOrderTotal" class="text-gold font-bold font-mono">0 ر.ي</span> عبر <span id="successBankName" class="text-gold">بنك الكريمي</span></p>
+        </div>
+
+        <div class="flex flex-col gap-2 max-w-xs mx-auto">
+          <a id="successWhatsAppBtn" href="#" target="_blank" class="btn-whatsapp-cta text-xs py-2.5 px-6 inline-flex justify-center">
+            <span>متابعة الطلب فوراً عبر واتساب 💬</span>
+          </a>
+
+          <button id="successInvoiceBtn" type="button" class="btn-luxury-secondary text-xs py-2 px-6">
+            <span>عرض وطباعة الفاتورة الرسمية 🧾</span>
+          </button>
+        </div>
+
+        <div>
+          <button onclick="closeCheckoutModal()" class="text-xs text-gray-400 underline">
+            العودة للمتجر
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       PRODUCT DETAIL MODAL (مطابق تماماً للشاشة الثانية تفاصيل المنتج)
+       ========================================================================= -->
+  <div id="productDetailModal" class="modal-backdrop">
+    <div class="modal-content max-w-lg p-0 bg-white text-gray-900 border border-gold/40 rounded-3xl overflow-hidden shadow-2xl relative">
+      
+      <!-- Top Modal Bar -->
+      <div class="flex items-center justify-between px-5 py-3 border-b border-gray-100 bg-white sticky top-0 z-30">
+        <button onclick="closeProductDetail()" class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-600 hover:bg-gray-200 text-sm font-bold transition-colors">✕</button>
+        <span class="font-heading font-black text-xs text-hk-gold-deep">تفاصيل مقتنيات حكاية الملكية</span>
+        <div class="flex items-center gap-1">
+          <button onclick="openCartDrawer()" class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-600 hover:bg-gray-200 text-sm">🛍️</button>
+        </div>
+      </div>
+
+      <div class="p-5 space-y-4 text-right max-h-[80vh] overflow-y-auto">
+        <!-- Large Centered Perfume Bottle with Golden Ambient Glow & Heart Icon -->
+        <div class="relative bg-gradient-to-b from-[#FDFBF7] via-[#F8F5EE] to-[#FAF8F5] rounded-3xl p-6 flex flex-col items-center justify-center border border-[#EDE8DF] overflow-hidden min-h-[240px]">
+          <div class="absolute w-44 h-44 rounded-full bg-gold/15 blur-2xl pointer-events-none"></div>
+          <img id="detailImage" src="" alt="العطر" class="relative z-10 h-44 sm:h-52 w-auto object-contain filter drop-shadow-[0_16px_25px_rgba(0,0,0,0.18)]" />
+          <div class="w-32 h-3.5 bg-black/20 rounded-[100%] blur-[3px] mt-1"></div>
+          <span id="detailBadge" class="badge-gold absolute top-3 right-3 text-[10px]">الأكثر طلباً 👑</span>
+          
+          <!-- Image Pagination Dots -->
+          <div class="flex items-center gap-1.5 mt-2">
+            <span class="w-2 h-2 rounded-full bg-gold"></span>
+            <span class="w-2 h-2 rounded-full bg-gray-300"></span>
+            <span class="w-2 h-2 rounded-full bg-gray-300"></span>
+          </div>
+
+          <!-- Floating Heart Favorite Button -->
+          <button onclick="toggleDetailWishlist(this)" class="absolute bottom-3 left-4 w-9 h-9 rounded-full bg-white border border-gray-200 shadow-sm flex items-center justify-center text-rose-500 hover:scale-110 active:scale-90 transition-transform" title="إضافة للمفضلة">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+          </button>
+        </div>
+
+        <!-- Product Title, Category & Stock Badge -->
+        <div class="space-y-1">
+          <div class="flex items-center justify-between">
+            <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-amber-50 border border-amber-200 text-amber-800 text-[10px] font-bold">
+              ★ <span id="detailRating">5.0</span> (142 تقييم النخبة)
+            </span>
+            <span class="text-[10px] text-emerald-600 font-bold bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200">
+              متوفر في المخزون ✓
+            </span>
+          </div>
+          <h3 id="detailName" class="text-xl font-heading font-black text-gray-950 pt-1 leading-snug">اسم العطر</h3>
+          <p id="detailFrench" class="text-xs text-gray-500 font-medium font-latin">Dehn Al Oud Royal Vintage</p>
+          <div class="flex items-baseline gap-2 mt-1">
+            <span id="detailPrice" class="text-2xl font-heading font-black text-hk-gold-deep">0 ر.س</span>
+            <span id="detailOldPrice" class="text-xs text-gray-400 line-through font-mono">0 ر.س</span>
+          </div>
+        </div>
+
+        <!-- Collapsible Description Section (قسم وصف قابل للطي بإطار ملون) -->
+        <div class="border border-[#E0D3C1] bg-[#FAF8F5] rounded-2xl overflow-hidden shadow-sm">
+          <button onclick="document.getElementById('webDescContent').classList.toggle('hidden'); document.getElementById('webDescChevron').classList.toggle('rotate-180');" class="w-full px-3.5 py-2.5 flex items-center justify-between text-right font-heading font-black text-xs text-hk-gold-deep bg-[#F7F2EB] hover:bg-[#F3EDE3] transition-colors">
+            <span class="flex items-center gap-1.5">
+              <span>بهجة العطور ونفحات الأصالة</span>
+              <span class="text-amber-600 text-[10px]">✨</span>
+            </span>
+            <svg id="webDescChevron" class="w-4 h-4 text-hk-gold-deep transform transition-transform duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"></path></svg>
+          </button>
+
+          <div id="webDescContent" class="p-3.5 text-xs text-gray-700 leading-relaxed space-y-2">
+            <p id="detailDesc">-</p>
+            <div class="grid grid-cols-2 gap-2 pt-1 text-[11px]">
+              <div class="p-2 rounded-lg bg-white border border-[#E9E1D5] flex items-center gap-1.5">
+                <span class="text-hk-gold-deep">🪵</span>
+                <span><strong>الثبات:</strong> +72 ساعة</span>
+              </div>
+              <div class="p-2 rounded-lg bg-white border border-[#E9E1D5] flex items-center gap-1.5">
+                <span class="text-hk-gold-deep">👑</span>
+                <span><strong>الفوحان:</strong> ملكي آسر</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- "يُشرى معه" (Frequently Bought Together) -->
+        <div class="space-y-2 pt-1">
+          <div class="flex items-center justify-between">
+            <h4 class="text-xs font-heading font-black text-gray-900 flex items-center gap-1">
+              <span>🛍️ يُشرى معه عادةً</span>
+            </h4>
+            <span class="text-[10px] text-gray-400">توليفات ملكية متناغمة</span>
+          </div>
+
+          <div class="grid grid-cols-2 gap-2">
+            <!-- Mini Card 1 -->
+            <div class="p-2.5 rounded-xl border border-gray-200 bg-[#FAFAFA] flex items-center justify-between shadow-xs">
+              <div class="flex items-center gap-2">
+                <img src="assets/images/bottles_3d/silk_musk.png" alt="مسك الحرير" class="h-10 w-auto object-contain" />
+                <div class="text-right">
+                  <h5 class="text-[11px] font-heading font-bold text-gray-900 truncate max-w-[85px]">مسك الحرير</h5>
+                  <span class="text-hk-gold-deep font-mono font-bold text-[11px] block">116 ر.س</span>
+                </div>
+              </div>
+              <button onclick="addToCart('hk-03', 1, event)" class="w-7 h-7 rounded-full bg-white border border-hk-gold-deep text-hk-gold-deep flex items-center justify-center font-bold text-sm shadow-sm active:bg-hk-gold-deep active:text-white" title="أضف">
+                +
+              </button>
+            </div>
+
+            <!-- Mini Card 2 -->
+            <div class="p-2.5 rounded-xl border border-gray-200 bg-[#FAFAFA] flex items-center justify-between shadow-xs">
+              <div class="flex items-center gap-2">
+                <img src="assets/images/bottles_3d/amber_royal.png" alt="نور العنبر" class="h-10 w-auto object-contain" />
+                <div class="text-right">
+                  <h5 class="text-[11px] font-heading font-bold text-gray-900 truncate max-w-[85px]">نور العنبر</h5>
+                  <span class="text-hk-gold-deep font-mono font-bold text-[11px] block">230 ر.س</span>
+                </div>
+              </div>
+              <button onclick="addToCart('hk-04', 1, event)" class="w-7 h-7 rounded-full bg-white border border-hk-gold-deep text-hk-gold-deep flex items-center justify-center font-bold text-sm shadow-sm active:bg-hk-gold-deep active:text-white" title="أضف">
+                +
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Milliliter Volume Custom Selector -->
+        <div class="p-3 rounded-2xl bg-[#F7F4EE] border border-[#E5DECF] space-y-2">
+          <div class="flex items-center justify-between text-xs">
+            <label for="customMlInput" class="font-bold text-gray-900 flex items-center gap-1.5 font-heading">
+              <span>🧪</span> حدد كمية الملي (ml) المطلوبة:
+            </label>
+            <span id="detailPerMlNotice" class="text-[10px] text-hk-gold-deep font-mono">تعبئة خاصة حسب رغبتك</span>
+          </div>
+
+          <div class="relative">
+            <input 
+              id="customMlInput" 
+              type="number" 
+              min="5" 
+              max="500" 
+              step="5"
+              placeholder="اكتب عدد الملي هنا (مثلاً: 50 أو 100 مل)" 
+              class="input-luxury text-sm py-2 px-3 w-full font-mono font-bold text-gray-900 placeholder-gray-400 border-gray-300 bg-white shadow-xs"
+              oninput="handleCustomMlInput(this.value)"
+            />
+            <span class="absolute left-3 top-2 text-xs font-bold text-hk-gold-deep pointer-events-none">مل / ml</span>
+          </div>
+
+          <div class="pt-0.5">
+            <span class="text-[10px] text-gray-400 block mb-1">أو اختر مقاساً سريعاً:</span>
+            <div id="detailSizesContainer" class="flex flex-wrap gap-1.5 text-xs"></div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Sticky Modal Footer (الشريط الثابت في الأسفل) -->
+      <div class="p-4 border-t border-gray-100 bg-[#FAF9F6] sticky bottom-0 z-30 shadow-lg">
+        <div class="flex items-center justify-between pb-2 mb-2 border-b border-gray-200 text-[10px]">
+          <span class="text-rose-600 font-bold flex items-center gap-1">
+            <span class="animate-ping inline-block w-1.5 h-1.5 rounded-full bg-rose-500"></span>
+            ينتهي العرض الخاص المخفض خلال:
+          </span>
+          <span class="font-mono font-black text-rose-700 bg-rose-50 px-2 py-0.5 rounded border border-rose-200">
+            03:48:19
+          </span>
+        </div>
+
+        <div class="flex items-center gap-2.5">
+          <!-- Quantity Stepper -->
+          <div class="flex items-center border border-gray-300 rounded-full bg-white px-2 py-1 shadow-inner">
+            <button onclick="document.getElementById('detailQty').value = Math.max(1, parseInt(document.getElementById('detailQty').value) - 1)" class="w-6 h-6 flex items-center justify-center text-gray-700 font-bold text-base hover:text-black">-</button>
+            <input id="detailQty" type="number" value="1" class="w-6 text-center bg-transparent text-xs font-mono font-black text-gray-900" readonly />
+            <button onclick="document.getElementById('detailQty').value = parseInt(document.getElementById('detailQty').value) + 1" class="w-6 h-6 flex items-center justify-center text-gray-700 font-bold text-base hover:text-black">+</button>
+          </div>
+
+          <!-- Add to Cart Wide Pill Button -->
+          <button onclick="addDetailToCart()" class="flex-1 py-3 px-4 rounded-full bg-gradient-to-r from-[#17140E] via-[#241F16] to-[#120F0A] border border-hk-gold text-hk-gold-light hover:brightness-125 font-heading font-black text-xs shadow-lg shadow-black/20 flex items-center justify-center gap-1.5 active:scale-95 transition-all">
+            <span>إضافة للسلة</span>
+            <span class="text-sm font-bold">+</span>
+          </button>
+
+          <a id="detailWhatsAppBtn" href="#" target="_blank" class="w-10 h-10 rounded-full border border-emerald-500/60 bg-emerald-600 text-white flex items-center justify-center hover:scale-105 transition-transform" title="طلب فوري عبر واتساب">
+            💬
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       PRINTABLE OFFICIAL LUXURY INVOICE MODAL
+       ========================================================================= -->
+  <div id="invoiceModal" class="modal-backdrop">
+    <div class="modal-content max-w-2xl p-6 bg-white text-black border-2 border-gold print:p-0">
+      <div class="flex items-center justify-between border-b pb-3 print-hide">
+        <span class="text-xs font-bold text-gold font-heading">فاتورة رسمية • دار حكاية (HIKAYA)</span>
+        <div class="flex items-center gap-2">
+          <button onclick="window.print()" class="px-3 py-1 rounded bg-[#B8945F] text-black font-bold text-xs hover:bg-[#D4B896]">🖨️ طباعة</button>
+          <button onclick="closeInvoiceModal()" class="text-gray-500 hover:text-black">✕</button>
+        </div>
+      </div>
+
+      <div class="pt-4 space-y-4 text-right text-xs">
+        <div class="flex items-center justify-between border-b pb-3">
+          <div class="flex items-center gap-3">
+            <img src="assets/images/hikaya_logo_gold.png" alt="دار حكاية للعطور" class="h-10 w-auto object-contain filter drop-shadow" />
+            <div>
+              <h2 class="text-xl font-heading font-black text-[#141414]">دار حكاية للعطور</h2>
+              <p class="text-[10px] text-[#8C6D3F] font-latin font-bold">HIKAYA HAUTE PARFUMERIE • عدن</p>
+            </div>
+          </div>
+          <div class="text-left font-mono text-[11px]">
+            <div class="font-bold text-[#8C6D3F]" id="invNumber">INV-HK-2026</div>
+            <div class="text-gray-600" id="invDate">التاريخ: 2026-10-15</div>
+            <div class="text-emerald-700 font-bold" id="invStatus">معتمد ومسدد ✅</div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3 bg-gray-50 p-3 rounded-lg border text-[11px]">
+          <div>
+            <span class="text-gray-500 block">بيانات العميل:</span>
+            <div class="font-bold text-gray-900" id="invCustomerName">-</div>
+            <div class="text-gray-700 font-mono" id="invCustomerPhone">-</div>
+            <div class="text-gray-600" id="invCustomerCity">-</div>
+          </div>
+          <div class="text-left">
+            <span class="text-gray-500 block">طريقة السداد:</span>
+            <div class="font-bold text-gray-900" id="invBankName">-</div>
+            <div class="text-gray-700 font-mono" id="invTransferNum">-</div>
+          </div>
+        </div>
+
+        <table class="w-full text-right border-collapse text-[11px]">
+          <thead>
+            <tr class="bg-[#141414] text-white">
+              <th class="p-2">العطر والمقاس</th>
+              <th class="p-2 text-center">الكمية</th>
+              <th class="p-2">السعر</th>
+              <th class="p-2 text-left">الإجمالي</th>
+            </tr>
+          </thead>
+          <tbody id="invItemsTable" class="divide-y divide-gray-200 text-gray-800"></tbody>
+        </table>
+
+        <div class="flex items-center justify-between pt-3 border-t">
+          <div class="text-[10px] text-gray-600">ختم الاعتماد الرسمي • دار حكاية للعطور عدن 👑</div>
+          <div class="text-left text-xs">
+            <div class="font-heading font-black text-[#141414] text-base">المبلغ الإجمالي: <span id="invTotal">0 ر.ي</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       SCRIPTS: Firebase v10 Compat SDK + Service + Particles + Core App Engine
+       ========================================================================= -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+  <script src="assets/js/firebase-config.js"></script>
+  <script src="assets/js/firebase-service.js"></script>
+  <script src="assets/js/particles.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
